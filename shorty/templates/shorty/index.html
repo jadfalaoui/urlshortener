@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>shorty</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.0/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/flowbite.min.js"></script>
+
+</head>
+
+<body class="bg-gray-100 text-gray-900 font-sans leading-normal tracking-normal">
+
+    <section class="h-screen flex flex-col justify-center items-center bg-whites pt-10">
+        <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16">
+            <h1
+                class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+                shorty</h1>
+            <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400">
+                hassle-free, straightforward url shortening</p>
+                
+
+            <div class="mb-6">
+                <label for="url" class="inline inline-block mb-2 text-sm font-medium text-gray-900">url</label>
+                <input type="text" id="urlInput" value="https://"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="your url here...">
+            </div>
+            <button onclick="shortenURL()">Shorten URL</button>
+            <button onclick="lengthenURL()">Get Original URL</button>
+            <p id="result"></p>
+
+        </div>
+    </section>
+
+
+
+
+
+
+    <script>
+        function sendRequest(endpoint, data) {
+            fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert('Error: ' + data.error);
+                    } else {
+                        document.getElementById('result').innerText = endpoint === '/shorten' ? 'Short URL: ' + data.short_url : 'Original URL: ' + data.destination_url;
+                    }
+                })
+                .catch(error => alert('Error: ' + error));
+        }
+
+        function shortenURL() {
+            const url = document.getElementById('urlInput').value;
+            sendRequest('/shorten', { url: url });
+        }
+
+        function lengthenURL() {
+            const url = document.getElementById('urlInput').value;
+            sendRequest('/lengthen', { short_url: url });
+        }
+    </script>
+
+</body>
+
+</html>
