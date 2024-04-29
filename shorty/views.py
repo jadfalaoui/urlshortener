@@ -41,7 +41,7 @@ def lengthenURL(shortURL):
         return "Error: URL not found"
 
 def index(request):
-    print(loader.get_template('shorty/index.html'))
+    template_path = '/var/task/shorty/templates/index.html'
     return render(request,'shorty/index.html')
 
 class ShortenAPIView(APIView):
