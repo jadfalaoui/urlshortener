@@ -41,7 +41,7 @@ def lengthenURL(shortURL):
         return "Error: URL not found"
 
 def index(request):
-    template_path = '/var/task/shorty/templates/index.html'
+    template_path = '/var/task/shorty/templates/shorty/index.html'
 
     with open(template_path, 'r') as file:
         template_content = file.read()
