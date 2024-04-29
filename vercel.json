@@ -1,7 +1,7 @@
 {
     "version": 2,
     "builds": [{
-      "src": "travel/wsgi.py",
+      "src": "urlshortener/wsgi.py",
       "use": "@vercel/python"
     }],
     "routes": [{
