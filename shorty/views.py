@@ -12,6 +12,7 @@ from rest_framework import status
 import requests
 import json
 
+vercelDatabase = {}
 def shortenURL(longURL):
     api_url = "https://smolurl.com/api/links"
     headers = {
@@ -22,10 +23,7 @@ def shortenURL(longURL):
     response = requests.post(api_url, headers=headers, data=data)
     if response.status_code == 201:
         result = response.json()
-        entry = URL.objects.create(
-            shortURL=result['data']['short_url'],
-            longURL=result['data']['destination_url']
-        )
+        vercelDatabase[result['data']['short_url']] = result['data']['destination_url']
         return {
             "short_url": result['data']['short_url'],
             "destination_url": result['data']['destination_url']
@@ -35,9 +33,9 @@ def shortenURL(longURL):
 
 def lengthenURL(shortURL):
     try:
-        longURL = URL.objects.get(shortURL=shortURL)
+        longURL = vercelDatabase[shortURL]
         return {"short_url": shortURL, "destination_url": longURL.longURL}
-    except URL.DoesNotExist:
+    except shortURL not in vercelDatabase:
         return "Error: URL not found"
 
 def index(request):
