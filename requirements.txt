@@ -1,3 +1,4 @@
 Django>=3.2
 djangorestframework>=3.12
+requests>=2.26.0
 pathlib>=1.0.1
