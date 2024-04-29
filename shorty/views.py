@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.http import HttpResponse
+from django.template import Context, Template
 
 from .models import URL
-from django.template import loader
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-
 
 import requests
 import json
@@ -42,7 +42,17 @@ def lengthenURL(shortURL):
 
 def index(request):
     template_path = '/var/task/shorty/templates/index.html'
-    return render(request,'shorty/index.html')
+
+    with open(template_path, 'r') as file:
+        template_content = file.read()
+
+    template = Template(template_content)
+    
+    context = {}
+    
+    html = template.render(Context(context))
+    
+    return HttpResponse(html)
 
 class ShortenAPIView(APIView):
     def post(self, request, *args, **kwargs):
