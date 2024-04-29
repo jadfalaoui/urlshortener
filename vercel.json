@@ -1,0 +1,20 @@
+{
+    "version": 2,
+    "builds": [{
+      "src": "travel/wsgi.py",
+      "use": "@vercel/python"
+    }],
+    "routes": [{
+      "src": "/(.*)",
+      "dest": "urlshortener/wsgi.py"
+    }],
+    "env": {
+      
+    },
+    "build": {
+      "env": {
+        "DEBUG": "false"
+      }
+    }
+  }
+  
