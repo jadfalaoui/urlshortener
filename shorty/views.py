@@ -30,10 +30,10 @@ def shortenURL(longURL):
         return "Error: " + response.text
 
 def lengthenURL(shortURL):
-    try:
+    if shortURL in vercelDatabase:
         longURL = vercelDatabase[shortURL]
         return {"short_url": shortURL, "destination_url": longURL.longURL}
-    except shortURL not in vercelDatabase:
+    else:
         return "Error: URL not found"
 
 def index(request):
